@@ -1,26 +1,62 @@
-version: "3.8"
-
 services:
-  shard0:
+
+  shard0-leader:
     build: .
-    container_name: shard0
+    container_name: shard0-leader
     command: python shard.py 5001
     ports:
       - "5001:5001"
-  
-  shard1:
+    environment:
+      - IS_LEADER=1
+      - FOLLOWERS=shard0-follower:6001
+
+  shard0-follower:
     build: .
-    container_name: shard1
+    container_name: shard0-follower
+    command: python shard.py 6001
+    ports:
+      - "6001:6001"
+    environment:
+      - IS_LEADER=0
+
+  shard1-leader:
+    build: .
+    container_name: shard1-leader
     command: python shard.py 5002
     ports:
       - "5002:5002"
+    environment:
+      - IS_LEADER=1
+      - FOLLOWERS=shard1-follower:6002
 
-  shard2:
+  shard1-follower:
     build: .
-    container_name: shard2
+    container_name: shard1-follower
+    command: python shard.py 6002
+    ports:
+      - "6002:6002"
+    environment:
+      - IS_LEADER=0
+
+
+  shard2-leader:
+    build: .
+    container_name: shard2-leader
     command: python shard.py 5003
     ports:
       - "5003:5003"
+    environment:
+      - IS_LEADER=1
+      - FOLLOWERS=shard2-follower:6003
+
+  shard2-follower:
+    build: .
+    container_name: shard2-follower
+    command: python shard.py 6003
+    ports:
+      - "6003:6003"
+    environment:
+      - IS_LEADER=0
   
   router:
     build: .
@@ -29,6 +65,9 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - shard0
-      - shard1
-      - shard2
+      - shard0-leader
+      - shard0-follower
+      - shard1-leader
+      - shard1-follower
+      - shard2-leader
+      - shard2-follower
