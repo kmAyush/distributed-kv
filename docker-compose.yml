@@ -18,6 +18,8 @@ services:
       - "6001:6001"
     environment:
       - IS_LEADER=0
+      - MY_PORT=6001
+      - LEADER_URL=http://shard0-leader:5001
 
   shard1-leader:
     build: .
@@ -37,6 +39,8 @@ services:
       - "6002:6002"
     environment:
       - IS_LEADER=0
+      - MY_PORT=6002
+      - LEADER_URL=http://shard1-leader:5002
 
 
   shard2-leader:
@@ -57,7 +61,10 @@ services:
       - "6003:6003"
     environment:
       - IS_LEADER=0
-  
+      - MY_PORT=6003
+      - LEADER_URL=http://shard2-leader:5003
+
+
   router:
     build: .
     container_name: router
@@ -71,3 +78,16 @@ services:
       - shard1-follower
       - shard2-leader
       - shard2-follower
+
+  locust:
+    build:
+      context: .
+      dockerfile: Dockerfile.locust
+    container_name: locust
+    ports:
+    - "8089:8089"
+    volumes:
+    - ./locustfile.py:/locust/locustfile.py
+    command: locust -f /locust/locustfile.py --host=http://router:5000
+    depends_on:
+    - router

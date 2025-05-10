@@ -21,6 +21,7 @@ shards={
     }, 
 }
 
+
 def get_shard_index(key):
     return int(hashlib.md5(key.encode()).hexdigest(), 16) % NUM_SHARDS
 
