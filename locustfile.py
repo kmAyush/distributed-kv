@@ -2,7 +2,7 @@ from locust import HttpUser, task, between
 import json
 
 class ShardUser(HttpUser):
-    wait_time = between(1,5)
+    wait_time = between(1,3)
 
     @task(2)
     def get_key(self):
