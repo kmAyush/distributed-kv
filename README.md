@@ -103,7 +103,6 @@ Note : Wait time in locustfile is set to 1-3 seconds, reduce to optimize RPS.
 
 
 ## Acknowledgments
-
-- Inspired by distributed systems concepts from MIT 6.824.
+- To understand the basics of distributed database system. 
 - Built with Python, Flask, and Docker.
 - Load testing powered by Locust.
