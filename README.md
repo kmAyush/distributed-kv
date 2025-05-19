@@ -1,6 +1,11 @@
 # Distributed Key-Value Store with Replication and Sharding
 
 A scalable, fault-tolerant distributed key-value store implemented in Python. This project demonstrates a distributed system with sharding, replication, and routing to handle key-value operations across multiple nodes.
+<br/>
+<div align="center"><img src="https://github.com/user-attachments/assets/8f59ceae-6420-4726-899d-24d6d064a73c" width=720>
+
+[Image Source](https://medium.com/@shivajiofficial5088/sharding-partitioning-and-replication-often-confused-concepts-of-system-design-%EF%B8%8F-e99c523791e8)
+</div>
 
 ## Features
 
